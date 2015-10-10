@@ -21,6 +21,12 @@ int getSignificantNum(int largestNum){
 	return sigNum;
 }
 
+int getDigit(int array, int sigNum){
+	int newArray;
+	newArray = array/pow(10,sigNum);
+	return newArray;
+}
+
 int RadixSort(int array){
 	
 }
