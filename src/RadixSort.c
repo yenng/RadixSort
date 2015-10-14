@@ -27,54 +27,36 @@ int getSignificantNum(int largestNum){
 	// array = *array/pow(10,sigNum);
 // }
 
-void RadixSort(int *array,int size){
+void RadixSort(int *array,int size, int sigNum){
 	int i;
 	int k = 0;
-	//**********************print array**********************
-	printf("[ ");
-	for (i = 0; i < size; i++)
-		printf("%d ", array[i]);
-	printf("]\n");
-	//**********************print array**********************
-	int largestNum, sigNum, semiSorted[size], newArray[size],beam[10][size],j;
+	int semiSorted[size], newArray[size],beam[10][size],j;
 	int count[10] = {0};
-	largestNum = getLargestNum(&array[0],size);
-	int x = getSignificantNum(largestNum);
-	printf("%i\n",largestNum);
-	printf("%i\n",x);
+	
+	//Sort the array elements according to the significant number, then store to various beam.
 	for(i = 0; i < size; i++){
-		newArray[i] = array[i]/pow(10,x);
+		newArray[i] = array[i]/pow(10,sigNum);
 		for(j=0;j<10;j++){
 			if (newArray[i]==j){
 				beam[j][count[j]] = array[i];
-				// printf("%d\n", array[i]);
 				count[j]++;
 			}
 		}
 	}
-	//**********************print array**********************
-	printf("[ ");
-	for (i = 0; i < count[0]; i++)
-		printf("%d ", beam[0][i]);
-	printf("]\n");
-	//**********************print array**********************
 	
+	//take the elements out from the beam and send back to the array by pointer.
 	for(i=0;i<10;i++){
 		for(j=0;j<count[i];j++){
 			array[k] = beam[i][j];
 			k++;
 		}
 	}
-	//**********************print array**********************
-	printf("[ ");
-	for (i = 0; i < size; i++)
-		printf("%d ", array[i]);
-	printf("]\n");
-	//**********************print array**********************
-	while(x!=0){
-		// RadixSort(array, size);
-		x--;
-	}
+	
+	//Sort the elements from most significant number to least significant number.
+	sigNum--;
+	if(sigNum>=0)
+		RadixSort(&array[0],size,sigNum);
+		
 }
 
 
